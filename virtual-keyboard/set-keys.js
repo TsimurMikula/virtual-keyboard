@@ -425,10 +425,10 @@ export const keysJSON = [
   },
   {
     "code": "ArrowUp",
-    "keyEN": "↑",
-    "shiftKeyEN": "↑",
-    "keyRU": "↑",
-    "shiftKeyRU": "↑",
+    "keyEN": "▲",
+    "shiftKeyEN": "▲",
+    "keyRU": "▲",
+    "shiftKeyRU": "▲",
     "group": "functional"
   },
   {
@@ -481,26 +481,26 @@ export const keysJSON = [
   },
   {
     "code": "ArrowLeft",
-    "keyEN": "←",
-    "shiftKeyEN": "←",
-    "keyRU": "←",
-    "shiftKeyRU": "←",
+    "keyEN": "◄",
+    "shiftKeyEN": "◄",
+    "keyRU": "◄",
+    "shiftKeyRU": "◄",
     "group": "functional"
   },
   {
     "code": "ArrowDown",
-    "keyEN": "↓",
-    "shiftKeyEN": "↓",
-    "keyRU": "↓",
-    "shiftKeyRU": "↓",
+    "keyEN": "▼",
+    "shiftKeyEN": "▼",
+    "keyRU": "▼",
+    "shiftKeyRU": "▼",
     "group": "functional"
   },
   {
     "code": "ArrowRight",
-    "keyEN": "→",
-    "shiftKeyEN": "→",
-    "keyRU": "→",
-    "shiftKeyRU": "→",
+    "keyEN": "►",
+    "shiftKeyEN": "►",
+    "keyRU": "►",
+    "shiftKeyRU": "►",
     "group": "functional"
   },
   {

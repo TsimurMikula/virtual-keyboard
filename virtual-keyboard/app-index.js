@@ -5,11 +5,15 @@ const CssClasses = {
   HD: 'header',
   TX: 'textarea',
   KB_WR: 'keyboard-wrap',
-  WR: 'wrap',
   KB: 'keyboard',
   KB_K: 'keyboard__key',
   KB_KA: 'keyboard__key_active',
-  FT: 'footer'
+  KB_CA: 'keyboard__caps_active',
+  FT: 'footer',
+  KB_C: 'keyboard__caps',
+  KB_E: 'keyboard__enter',
+  KB_SH: 'keyboard__shift',
+  KB_S: 'keyboard__space',
 }
 
 let keyEn = [];
@@ -55,14 +59,12 @@ textarea.setAttribute('autofocus', 'true');
 document.body.append(textarea);
 
 const keyboardWrap = createElement('section', CssClasses.KB_WR);
-const wrap = createElement('div', CssClasses.WR);
-keyboardWrap.append(wrap);
 const keyboard = createElement('div', CssClasses.KB);
-wrap.append(keyboard);
+keyboardWrap.append(keyboard);
 document.body.append(keyboardWrap);
 
 const footer = createElement('div', CssClasses.FT);
-footer.textContent = 'Клавиатура создана в операционной системе Windows. Для переключения языка комбинация: левые ctrl + alt.';
+footer.innerText = `Клавиатура создана в операционной системе Windows.\nДля переключения языка комбинация: левые (ctrl + alt).`;
 document.body.append(footer);
 
 function createLayout(arr) {
@@ -73,6 +75,10 @@ function createLayout(arr) {
       const keyComponent = createKey(arr[i]);
       keyComponent.setAttribute('data-key', arr[i]);
       keyComponent.setAttribute('data-keycode', keyCode[i]);
+      if (keyComponent.dataset.keycode == 'CapsLock') keyComponent.classList.add(CssClasses.KB_C);
+      if (keyComponent.dataset.keycode == 'Enter') keyComponent.classList.add(CssClasses.KB_E);
+      if (keyComponent.dataset.key == 'Shift') keyComponent.classList.add(CssClasses.KB_SH);
+      if (keyComponent.dataset.keycode == 'Space') keyComponent.classList.add(CssClasses.KB_S);
       keyboard.append(keyComponent);
   }
 }
@@ -110,6 +116,14 @@ document.addEventListener('keydown', (e) => {
     toggleCapsLock = false;
   }
 })
+document.addEventListener('keydown', (e) => {
+  document.addEventListener('keyup', (e) => {
+    let capsActive = document.querySelector(`[data-keycode = 'CapsLock']`);
+    if (e.code == capsActive.dataset.keycode) capsActive.classList.add(CssClasses.KB_CA);  
+    if (e.code == capsActive.dataset.keycode && !toggleCapsLock) capsActive.classList.remove(CssClasses.KB_CA);
+  })
+})
+
 
 document.addEventListener('keydown', (e) => {
   if (e.code == 'ShiftLeft' && !toggleLayout || e.code == 'ShiftRight' && !toggleLayout) {
@@ -121,6 +135,7 @@ document.addEventListener('keydown', (e) => {
     toggleShift ? createLayout(shiftKeyRu) : createLayout(shiftKeyRu);
   }
 })
+
 document.addEventListener('keyup', (e) => {
   if (e.code == 'ShiftLeft' && !toggleLayout || e.code == 'ShiftRight' && !toggleLayout) {
     toggleShift ? createLayout(keyEn) : createLayout(keyEn);
@@ -129,6 +144,19 @@ document.addEventListener('keyup', (e) => {
     toggleShift ? createLayout(keyRu) : createLayout(keyRu);
   }
 })
+
+/* document.addEventListener('keydown', (e) => {
+  if (toggleCapsLock && e.code == 'ShiftLeft') {
+    toggleLayout ? createLayout(keyRu) : createLayout(shiftKeyRu);
+    !toggleLayout ? createLayout(keyEn) : createLayout(shiftKeyEn);
+  }
+})
+document.addEventListener('keyUP', (e) => {
+  if (toggleCapsLock && e.code == 'ShiftLeft') {
+    toggleLayout ? createLayout(shiftKeyRu) : createLayout(keyRu);
+    !toggleLayout ? createLayout(shiftKeyEn) : createLayout(keyEn);
+  }
+}) */
 
 document.addEventListener('keydown', (e) => {
   let keyActiveK = document.querySelector(`[data-keycode='${e.code}']`);
@@ -149,25 +177,72 @@ document.addEventListener('keyup', (e) => {
   if (keyActiveK) keyActiveK.classList.remove(CssClasses.KB_KA);
 })
 
+document.addEventListener('keydown', (e) => {
+  if (e.code == 'ArrowUp') return textarea.value += '▲';
+  if (e.code == 'ArrowLeft') return textarea.value += '◄';
+  if (e.code == 'ArrowDown') return textarea.value += '▼';
+  if (e.code == 'ArrowRight') return textarea.value += '►';
+})  
 
+document.addEventListener('keydown', (e) => {
+  if (e.code == 'Tab') return textarea.value += '    ';
+})  
 
 
 keyboard.addEventListener('click', (e) => {
   if (e.target.dataset.key === 'Backspace')  {
     return textarea.value = textarea.value.slice(0, -1);
   }
-  /* if (e.target.dataset.key === 'Del') {
-    return textarea.value = textarea.value.slice(0, -1) + textarea.value.slice(0, -1);
-  }  */
   if (e.target.dataset.key === 'Tab')  {
-    return textarea.value = textarea.value.slice(textarea.value.length, 0, '    ');
+    return textarea.value += '    ';
+  }
+ /*  if (e.target.dataset.key === 'Del') {
+    return textarea.value = textarea.value.slice(0, -1);
+  }   */
+  if (e.target.dataset.key === 'CapsLock') {
+    if (toggleLayout) {
+      toggleCapsLock = !toggleCapsLock;
+      toggleCapsLock ? createLayout(shiftKeyRu) : createLayout(keyRu);
+      return;
+    } else {
+      toggleCapsLock = !toggleCapsLock;
+      toggleCapsLock ? createLayout(shiftKeyEn) : createLayout(keyEn);
+      return;
+    }
   }
   if (e.target.dataset.key === 'Enter') {
     return textarea.value += '\n';
   }
+  if (e.target.dataset.key === 'Ctrl' || e.target.dataset.key === 'Alt' || e.target.dataset.key === 'Win') {
+    return '';
+  }
   if (e.target.dataset.key) {
     textarea.value += e.target.dataset.key;
   }
+})
+
+keyboard.addEventListener('mousedown', (e) => {
+  if (e.target.dataset.key == 'Shift' && !toggleLayout) {
+    toggleShift = !toggleShift;
+    toggleShift ? createLayout(shiftKeyEn) : createLayout(shiftKeyEn);
+  }
+  if (e.target.dataset.key == 'Shift' && toggleLayout) {
+    toggleShift = !toggleShift;
+    toggleShift ? createLayout(shiftKeyRu) : createLayout(shiftKeyRu);
+  }  
+/*   if (e.target.dataset.key == 'CapsLock') {
+    let capsActive = document.querySelector(`[data-keycode = 'CapsLock']`)
+   capsActive.classList.add(CssClasses.KB_CA);
+    console.log(capsActive)
+  } */
+})
+keyboard.addEventListener('mouseup', (e) => {
+  if (e.target.dataset.key == 'Shift' && !toggleLayout) {
+    toggleShift ? createLayout(keyEn) : createLayout(keyEn);
+  }
+  if (e.target.dataset.key == 'Shift' && toggleLayout) {
+    toggleShift ? createLayout(keyRu) : createLayout(keyRu);
+  }  
 })
 
 

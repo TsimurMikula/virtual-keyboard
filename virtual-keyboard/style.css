@@ -1,7 +1,6 @@
 body {
   height: 100vh;
   background-color: #b7e0e6;
-  margin: 0 auto;
 }
 
 .header {
@@ -18,18 +17,20 @@ body {
   height: 200px;
 }
 
-.wrap {
+.keyboard-wrap {
   max-width: 950px;
   margin: 0 auto;
-  border-radius: 10px;
+  margin-top: 20px;
 }
 
 .keyboard {
   display: flex;
   flex-wrap: wrap;
-  height: 300px;
-  background-color: rgba(63, 229, 229, 0.392);
+  height: 280px;
+  background-color: rgba(165, 173, 173, 0.392);
   padding: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px #000000;
 }
 
 .keyboard__key {
@@ -39,8 +40,8 @@ body {
   height: 45px;
   min-width: 45px;
   border-radius: 7px;
-  box-shadow: 2px 4px 5px #000000;
-  background-color: rgba(140, 247, 247, 0.392);
+  box-shadow: 2px 3px 4px #000000;
+  background-color: rgba(118, 200, 200, 0.823);
   cursor: pointer;
   font-size: 25px;
   padding: 0 5px;
@@ -48,19 +49,36 @@ body {
 }
 
 .keyboard__key:hover {
-  box-shadow: 2px 4px 5px #000000;
-  background-color: rgba(223, 255, 18, 0.816);
+  background-color: rgba(7, 85, 174, 0.816);
 }
 
 .keyboard__key_active {
-  box-shadow: 2px 4px 5px #000000;
-  background-color: rgba(223, 255, 18, 0.816);
+  background-color: rgba(7, 85, 174, 0.816);
+}
+
+.keyboard__caps_active {
+  background-color: rgba(10, 33, 151, 0.816);
 }
 
 .footer {
   display: flex;
   justify-content: center;
-  width: 500px;
   font-size: 20px;
   margin: 20px;
+}
+
+.keyboard__caps {
+  width: 120px;
+}
+
+.keyboard__shift {
+  width: 106px;
+}
+
+.keyboard__enter {
+  width: 93px;
+}
+
+.keyboard__space {
+  width: 416px;
 }
