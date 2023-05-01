@@ -57,11 +57,13 @@ body {
 }
 
 .keyboard__key_active {
+  color: aliceblue;
   background-color: rgba(7, 85, 174, 0.816);
 }
 
 .keyboard__caps_active {
-  background-color: rgba(10, 33, 151, 0.816);
+  color: aliceblue;
+  background-color: rgba(7, 85, 174, 0.816);
 }
 
 .footer {
