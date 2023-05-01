@@ -41,11 +41,15 @@ body {
   min-width: 45px;
   border-radius: 7px;
   box-shadow: 2px 3px 4px #000000;
-  background-color: rgba(118, 200, 200, 0.823);
+  background-color: rgba(91, 191, 216, 0.526);
   cursor: pointer;
   font-size: 25px;
   padding: 0 5px;
   margin: 0 7px 7px 0;
+}
+
+.keyboard__key_func {
+  background-color: rgba(118, 200, 200, 0.823);
 }
 
 .keyboard__key:hover {

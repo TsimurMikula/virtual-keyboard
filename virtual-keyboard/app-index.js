@@ -7,6 +7,7 @@ const CssClasses = {
   KB_WR: 'keyboard-wrap',
   KB: 'keyboard',
   KB_K: 'keyboard__key',
+  KB_KF: 'keyboard__key_func',
   KB_KA: 'keyboard__key_active',
   KB_CA: 'keyboard__caps_active',
   FT: 'footer',
@@ -21,21 +22,15 @@ let shiftKeyEn = [];
 let keyRu = [];
 let shiftKeyRu = [];
 let keyCode = [];
+let group = [];
 
 for (let i = 0; i < keysJSON.length; i++) {
   keyEn.push(keysJSON[i].keyEN);
-}
-for (let i = 0; i < keysJSON.length; i++) {
   keyRu.push(keysJSON[i].keyRU);
-}
-for (let i = 0; i < keysJSON.length; i++) {
   shiftKeyEn.push(keysJSON[i].shiftKeyEN);
-}
-for (let i = 0; i < keysJSON.length; i++) {
   shiftKeyRu.push(keysJSON[i].shiftKeyRU);
-}
-for (let i = 0; i < keysJSON.length; i++) {
   keyCode.push(keysJSON[i].code);
+  group.push(keysJSON[i].group);
 }
 
 function createElement (tagName, className) {
@@ -75,10 +70,12 @@ function createLayout(arr) {
       const keyComponent = createKey(arr[i]);
       keyComponent.setAttribute('data-key', arr[i]);
       keyComponent.setAttribute('data-keycode', keyCode[i]);
+      keyComponent.setAttribute('data-group', group[i]);
       if (keyComponent.dataset.keycode == 'CapsLock') keyComponent.classList.add(CssClasses.KB_C);
       if (keyComponent.dataset.keycode == 'Enter') keyComponent.classList.add(CssClasses.KB_E);
       if (keyComponent.dataset.key == 'Shift') keyComponent.classList.add(CssClasses.KB_SH);
       if (keyComponent.dataset.keycode == 'Space') keyComponent.classList.add(CssClasses.KB_S);
+      if (keyComponent.dataset.group == 'functional') keyComponent.classList.add(CssClasses.KB_KF)
       keyboard.append(keyComponent);
   }
 }
